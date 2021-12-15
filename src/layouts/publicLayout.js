@@ -2,7 +2,7 @@ import * as React from "react"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import { useRouter } from "next/router"
-import { getSession } from "../session_manager/cookie"
+import { getSession } from "@session/cookie"
 
 export default function PublicLayout({ children }) {
   const { replace } = useRouter()
