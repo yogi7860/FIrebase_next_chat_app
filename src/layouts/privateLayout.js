@@ -17,6 +17,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const drawerWidth = 240;
 
@@ -66,8 +68,16 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PrivateLayout({ children }) {
+  const { isLogged } = useSelector(store => store.app)
+  const { replace } = useRouter()
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+
+  React.useEffect(() => {
+    if (!isLogged) {
+      replace("/auth/login", "/auth/login")
+    }
+  }, [isLogged])
 
   const handleDrawerOpen = () => {
     setOpen(true);

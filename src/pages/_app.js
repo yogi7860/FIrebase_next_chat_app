@@ -1,10 +1,12 @@
 import React from "react"
 import "../styles/globals.css"
 import { ThemeProvider, createTheme } from "@mui/material/styles"
-import { defaultTheme } from "../themes/defaultTheme"
 import { useRouter } from "next/router"
+import { Provider as ReduxProvider } from "react-redux"
 import PublicLayout from "../layouts/publicLayout"
 import PrivateLayout from "../layouts/privateLayout"
+import { defaultTheme } from "../themes/defaultTheme"
+import store from "../redux/store"
 
 function MyApp({ Component, pageProps }) {
   const currentTheme = createTheme(defaultTheme)
@@ -20,11 +22,13 @@ function MyApp({ Component, pageProps }) {
     : React.Fragment
 
   return (
-    <ThemeProvider theme={currentTheme}>
-      <Wrapper>
-        <Component {...pageProps} />
-      </Wrapper>
-    </ThemeProvider>
+    <ReduxProvider store={store}>
+      <ThemeProvider theme={currentTheme}>
+        <Wrapper>
+          <Component {...pageProps} />
+        </Wrapper>
+      </ThemeProvider>
+    </ReduxProvider>
   )
 }
 
