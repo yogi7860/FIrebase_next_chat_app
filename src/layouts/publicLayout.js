@@ -1,18 +1,18 @@
 import * as React from "react"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
-import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
+import { getSession } from "../session_manager/cookie"
 
 export default function PublicLayout({ children }) {
-  const { isLogged } = useSelector(store => store.app)
   const { replace } = useRouter()
+  const session = getSession("user-token")
 
   React.useEffect(() => {
-    if (isLogged) {
+    if (session) {
       replace("/user/dashboard", "/user/dashboard")
     }
-  }, [isLogged])
+  }, [session])
 
   return (
     <Box sx={{ flexGrow: 1 }}>

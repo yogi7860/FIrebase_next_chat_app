@@ -17,8 +17,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { getSession } from "../session_manager/cookie";
 
 const drawerWidth = 240;
 
@@ -68,16 +68,16 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PrivateLayout({ children }) {
-  const { isLogged } = useSelector(store => store.app)
   const { replace } = useRouter()
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const session = getSession("user-token")
 
   React.useEffect(() => {
-    if (!isLogged) {
+    if (!session) {
       replace("/auth/login", "/auth/login")
     }
-  }, [isLogged])
+  }, [session])
 
   const handleDrawerOpen = () => {
     setOpen(true);
